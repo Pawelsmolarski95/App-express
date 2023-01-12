@@ -1,0 +1,43 @@
+body {
+    background-color: rgb(55, 55, 59);
+    color: white;
+    position: relative;
+}
+
+h1 {
+    font-weight: lighter;
+    font-style: italic;
+}
+  
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+  margin-right: 40px;
+}
+
+nav a {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
