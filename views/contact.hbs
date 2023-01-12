@@ -1,3 +1,43 @@
 
-    <h1>Contact</h1>
-    <p>Send me an email at programmer@example.com</p>
+<h2>Contact</h2>  
+  <div class="contact_wrapper">
+    {{#if isSent}}
+    <div class="image_wrapper">
+      <h3> Your project design:</h3>
+      <img src="/images/{{ name }}">
+    </div>
+    {{/if}}
+    <div class="form_wrapper">
+       {{#if isSent}}
+      <div class="isSent">
+        <h3>The message has been sent!</h3>
+        <h3>File {{name}} has been saved</h3>
+      </div>
+      {{/if}}
+      {{#if isError}}
+      <div class="isError">
+        <h3>You can't leave fields empty!</h3>
+      </div>
+      {{/if}}
+  
+      <form action="/contact/send-message" method="POST" enctype="multipart/form-data">
+        <label>
+          Your name: <input type="text" name="author">
+        </label>
+        <label>
+          Your email: <input type="text" name="sender">
+        </label>
+        <label>
+          Title: <input type="text" name="title">
+        </label>
+        <label>
+          Project desing: <input type="file" name="uploaded_file" accept='.png,.jpg,.jpeg,.gif'>
+        </label>
+        <label>
+          <textarea name="message"></textarea>
+        </label>
+        <button type="submit">Send message</button>
+      </form>
+    </div>
+  </div>
+  

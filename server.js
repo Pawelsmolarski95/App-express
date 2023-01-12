@@ -1,14 +1,29 @@
 const express = require('express');
 const path = require('path');
 const hbs = require('express-handlebars');
+const multer  = require('multer');
 
 const app = express();
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/images')
+    },
+    filename: function (req, file, cb) {
+      
+      cb(null, file.originalname)
+    }
+  });
+const upload = multer({ storage: storage });
+
 
 app.engine('hbs', hbs({ extname: 'hbs', layoutsDir: './layouts', defaultLayout: 'main_light' }));
 
 app.set('view engine', '.hbs');
 
 app.use(express.static(path.join(__dirname, '/public')));
+
+app.use(express.urlencoded({extended: false}));
 
 app.get('/hello/:name', (req, res) => {
     res.render('hello', {name: req.params.name});
@@ -27,6 +42,21 @@ app.get('/info', (req, res) => {
 });
 app.get('/history', (req, res) => {
     res.render('history')
+});
+
+app.post(
+    '/contact/send-message', upload.single('uploaded_file'), (req, res ) => {
+    
+    const { author, sender, title, message } = req.body;
+    
+    if(author && sender && title && message && req.file) {
+        res.render('contact', {isSent: true, name: req.file.filename});
+      }
+      else {
+        res.render('contact', {isError: true});
+      }
+      
+      console.log(req.file, req.body)
 });
 
 app.use((req, res) => {
